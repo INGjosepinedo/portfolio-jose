@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jose Pinedo | Software Developer Portfolio</title>
+<meta name="description" content="Jose Pinedo — Systems Engineering student and aspiring Junior Developer, open to opportunities.">
+<meta property="og:title" content="Jose Pinedo | Software Developer Portfolio">
+<meta property="og:description" content="Systems Engineering student turning curiosity into code.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E⚡%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0A0C;
+    --bg-panel:#131316;
+    --bg-panel-soft:#1B1B1F;
+    --bg-code:#0E0E11;
+    --border:rgba(255,255,255,0.08);
+    --border-strong:rgba(255,255,255,0.18);
+    --lime:#D7FF3F;
+    --lime-soft:rgba(215,255,63,0.12);
+    --violet:#7C5CFF;
+    --violet-soft:rgba(124,92,255,0.16);
+    --text:#F5F5F0;
+    --text-muted:#9A9A9F;
+    --text-dim:#67676C;
+    --radius:14px;
+    --maxw:1120px;
+    --font-display:'Sora', sans-serif;
+    --font-body:'Inter', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:var(--font-body); line-height:1.65;
+    -webkit-font-smoothing:antialiased; overflow-x:hidden; position:relative;
+  }
+
+  a{ color:inherit; }
+  h1,h2,h3{ font-family:var(--font-display); margin:0; color:#FFFFFF; }
+  ::selection{ background:var(--lime); color:#0A0A0C; }
+
+  /* ---------- ambient gradient blobs ---------- */
+  .blob{ position:fixed; border-radius:50%; filter:blur(110px); opacity:.28; z-index:0; pointer-events:none; }
+  .blob-a{ width:480px; height:480px; background:var(--lime); top:-120px; right:-100px; animation:driftA 20s ease-in-out infinite; }
+  .blob-b{ width:420px; height:420px; background:var(--violet); bottom:0; left:-140px; animation:driftB 24s ease-in-out infinite; }
+  @keyframes driftA{ 0%,100%{ transform:translate(0,0); } 50%{ transform:translate(-40px,40px); } }
+  @keyframes driftB{ 0%,100%{ transform:translate(0,0); } 50%{ transform:translate(30px,-30px); } }
+
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 24px; position:relative; z-index:1; }
+  section{ padding:96px 24px; position:relative; z-index:1; scroll-margin-top:84px; }
+  .section-inner{ max-width:var(--maxw); margin:0 auto; }
+
+  /* ---------- nav ---------- */
+  .nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(10,10,12,0.75); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-inner{ max-width:var(--maxw); margin:0 auto; padding:16px 24px; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+  .logo{ font-family:var(--font-display); font-weight:800; font-size:18px; text-decoration:none; color:#fff; letter-spacing:-.02em; }
+  .logo span{ color:var(--lime); }
+
+  .nav-links{ list-style:none; display:flex; gap:28px; margin:0; padding:0; }
+  .nav-links a{
+    text-decoration:none; font-size:14px; font-weight:500; color:var(--text-muted);
+    transition:color .2s ease;
+  }
+  .nav-links a:hover, .nav-links a:focus-visible{ color:#fff; }
+
+  .nav-right{ display:flex; align-items:center; gap:14px; }
+
+  .pill{
+    display:inline-flex; align-items:center; gap:8px; padding:7px 14px;
+    border:1px solid var(--border-strong); border-radius:999px;
+    font-family:var(--font-mono); font-size:11.5px; color:var(--text-muted); white-space:nowrap;
+  }
+  .dot-live{ width:7px; height:7px; border-radius:50%; background:#28C840; animation:pulse 2s infinite; flex-shrink:0; }
+  @keyframes pulse{
+    0%{ box-shadow:0 0 0 0 rgba(40,200,64,.55); }
+    70%{ box-shadow:0 0 0 7px rgba(40,200,64,0); }
+    100%{ box-shadow:0 0 0 0 rgba(40,200,64,0); }
+  }
+
+  .lang-switch{ display:flex; border:1px solid var(--border-strong); border-radius:999px; padding:3px; gap:2px; }
+  .lang-opt{
+    background:none; border:0; color:var(--text-muted); font-family:var(--font-mono);
+    font-size:12px; padding:5px 11px; border-radius:999px; cursor:pointer; transition:all .2s ease;
+  }
+  .lang-opt.active{ background:var(--lime); color:#0A0A0C; font-weight:700; }
+
+  .nav-toggle{ display:none; flex-direction:column; gap:5px; background:none; border:0; cursor:pointer; padding:8px; }
+  .nav-toggle span{ width:22px; height:2px; background:#fff; display:block; }
+
+  /* ---------- buttons ---------- */
+  .btn{
+    display:inline-flex; align-items:center; gap:8px; padding:13px 22px;
+    border-radius:10px; text-decoration:none; font-weight:600; font-size:14.5px;
+    transition:all .2s ease; border:1px solid transparent; cursor:pointer;
+  }
+  .btn-primary{ background:var(--lime); color:#0A0A0C; }
+  .btn-primary:hover{ background:#e4ff70; transform:translateY(-2px); }
+  .btn-ghost{ border-color:var(--border-strong); color:#fff; }
+  .btn-ghost:hover{ border-color:var(--lime); color:var(--lime); transform:translateY(-2px); }
+
+  /* ---------- hero ---------- */
+  .hero{ padding:88px 24px 60px; }
+  .hero-grid{ max-width:var(--maxw); margin:0 auto; display:grid; grid-template-columns:1.05fr 1fr; gap:56px; align-items:center; }
+  .eyebrow{
+    font-family:var(--font-mono); color:var(--lime); font-size:13px; letter-spacing:.04em;
+    margin:0 0 18px; display:flex; align-items:center; gap:8px;
+  }
+  .hero h1{ font-size:clamp(38px,5.2vw,58px); line-height:1.08; letter-spacing:-.02em; font-weight:800; }
+  .hero p.lede{ color:var(--text-muted); font-size:17px; margin:20px 0 30px; max-width:46ch; }
+  .hero-actions{ display:flex; gap:14px; flex-wrap:wrap; }
+
+  /* ---------- code window (signature element) ---------- */
+  .code-window{
+    background:var(--bg-code); border:1px solid var(--border); border-radius:14px;
+    overflow:hidden; box-shadow:0 30px 70px rgba(0,0,0,.55), 0 0 0 1px rgba(215,255,63,0.04);
+  }
+  .code-titlebar{ display:flex; align-items:center; gap:8px; padding:13px 16px; border-bottom:1px solid var(--border); background:var(--bg-panel); }
+  .code-dot{ width:10px; height:10px; border-radius:50%; }
+  .code-dot.r{ background:#FF5F57; } .code-dot.y{ background:#FEBC2E; } .code-dot.g{ background:#28C840; }
+  .code-filename{ margin-left:8px; font-family:var(--font-mono); font-size:12px; color:var(--text-dim); }
+  .code-body{ padding:26px 24px; font-family:var(--font-mono); font-size:14px; line-height:2; }
+  .code-line{ opacity:0; transform:translateX(-8px); animation:codeIn .45s ease forwards; white-space:pre; }
+  @keyframes codeIn{ to{ opacity:1; transform:translateX(0); } }
+  .tok-kw{ color:#FF8FB1; } .tok-key{ color:#A9B8FF; } .tok-str{ color:var(--lime); } .tok-punc{ color:var(--text-dim); }
+  .cursor-blink{ display:inline-block; width:7px; height:14px; background:var(--lime); margin-left:2px; animation:blink 1s steps(1) infinite; vertical-align:-2px; }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  /* ---------- dividers ---------- */
+  .eyebrow-section{
+    font-family:var(--font-mono); font-size:13px; color:var(--lime); letter-spacing:.06em;
+    margin:0 0 10px; display:block;
+  }
+  h2.section-title{ font-size:clamp(28px,3.6vw,38px); font-weight:800; letter-spacing:-.02em; margin-bottom:14px; }
+  .section-sub{ color:var(--text-muted); margin:0 0 36px; max-width:55ch; }
+
+  /* ---------- about ---------- */
+  .about-card{
+    background:var(--bg-panel); border:1px solid var(--border); border-radius:var(--radius);
+    padding:32px; font-size:16px; color:var(--text); max-width:70ch;
+  }
+  .badges{ display:flex; flex-wrap:wrap; gap:10px; margin-top:24px; }
+  .badge{
+    font-family:var(--font-mono); font-size:12.5px; color:var(--text-muted);
+    border:1px solid var(--border-strong); padding:8px 14px; border-radius:999px;
+    background:var(--bg-panel-soft);
+  }
+
+  /* ---------- projects ---------- */
+  .projects-grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .project-card{
+    position:relative; background:var(--bg-panel); border:1px solid var(--border);
+    border-radius:var(--radius); padding:28px; transition:all .25s ease;
+  }
+  .project-card:hover{ transform:translateY(-5px); border-color:var(--lime); box-shadow:0 20px 40px rgba(0,0,0,.4), 0 0 0 1px var(--lime-soft); }
+  .tag{
+    display:inline-block; font-family:var(--font-mono); font-size:11px; letter-spacing:.04em;
+    color:var(--violet); background:var(--violet-soft); border:1px solid rgba(124,92,255,.3);
+    padding:4px 10px; border-radius:5px; margin-bottom:14px;
+  }
+  .project-card h3{ font-size:19px; margin-bottom:8px; }
+  .project-card p{ color:var(--text-muted); margin:0 0 16px; font-size:14.5px; }
+  .tech-row{ display:flex; flex-wrap:wrap; gap:8px; }
+  .tech-chip{ font-family:var(--font-mono); font-size:11.5px; color:var(--text-dim); border:1px solid var(--border); padding:4px 9px; border-radius:5px; }
+
+  /* ---------- skills ---------- */
+  .skills-groups{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+  .skill-group-label{ font-family:var(--font-mono); font-size:12px; letter-spacing:.08em; color:var(--text-dim); text-transform:uppercase; margin-bottom:14px; display:block; }
+  .chips{ display:flex; flex-wrap:wrap; gap:10px; }
+  .chip{
+    font-family:var(--font-mono); font-size:13px; color:var(--text);
+    border:1px solid var(--border-strong); background:var(--bg-panel-soft);
+    padding:9px 15px; border-radius:9px; transition:all .2s ease;
+  }
+  .chip:hover{ border-color:var(--lime); color:var(--lime); transform:translateY(-2px); }
+
+  /* ---------- contact ---------- */
+  .contact-card{
+    position:relative; background:var(--bg-panel); border:1px solid var(--border);
+    border-radius:20px; padding:52px 44px; overflow:hidden;
+  }
+  .contact-glow{ position:absolute; width:300px; height:300px; background:var(--lime); filter:blur(120px); opacity:.16; top:-100px; right:-60px; pointer-events:none; }
+  .contact-card h2{ font-size:clamp(26px,3.4vw,34px); font-weight:800; margin-bottom:12px; position:relative; }
+  .contact-card .section-sub{ position:relative; }
+  .contact-list{ display:flex; flex-direction:column; gap:14px; margin:28px 0 30px; position:relative; }
+  .contact-item{ display:flex; align-items:center; gap:12px; font-size:15px; }
+  .contact-item svg{ flex-shrink:0; color:var(--lime); }
+  .contact-item a{ text-decoration:none; color:var(--text); }
+  .contact-item a:hover{ color:var(--lime); }
+  .contact-actions{ display:flex; gap:12px; flex-wrap:wrap; position:relative; }
+
+  footer{
+    text-align:center; padding:34px 24px; color:var(--text-dim);
+    font-family:var(--font-mono); font-size:12px; border-top:1px solid var(--border); position:relative; z-index:1;
+  }
+
+  /* ---------- reveal ---------- */
+  .reveal{ opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.is-visible{ opacity:1; transform:translateY(0); }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .reveal{ opacity:1; transform:none; transition:none; }
+    .dot-live, .blob, .code-line, .cursor-blink{ animation:none !important; opacity:1; transform:none; }
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 860px){
+    .skills-groups{ grid-template-columns:1fr; gap:24px; }
+  }
+  @media (max-width: 760px){
+    .nav-toggle{ display:flex; }
+    .nav-links{
+      position:absolute; top:100%; left:0; right:0; flex-direction:column;
+      background:var(--bg-panel); border-bottom:1px solid var(--border-strong);
+      padding:10px 24px 22px; gap:16px; display:none;
+    }
+    .nav-links.open{ display:flex; }
+    #navStatusPill{ display:none; }
+    .hero-grid{ grid-template-columns:1fr; gap:36px; }
+    .projects-grid{ grid-template-columns:1fr; }
+    .contact-card{ padding:36px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="blob blob-a"></div>
+<div class="blob blob-b"></div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="logo">JP<span>.</span>dev</a>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" id="navToggle">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about" data-en="About" data-es="Sobre mí">About</a></li>
+      <li><a href="#projects" data-en="Projects" data-es="Proyectos">Projects</a></li>
+      <li><a href="#skills" data-en="Skills" data-es="Habilidades">Skills</a></li>
+      <li><a href="#contact" data-en="Contact" data-es="Contacto">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <span class="pill" id="navStatusPill"><i class="dot-live"></i><span data-en="Open to opportunities" data-es="Disponible para oportunidades">Open to opportunities</span></span>
+      <div class="lang-switch" role="group" aria-label="Language switch">
+        <button class="lang-opt active" data-lang="en">EN</button>
+        <button class="lang-opt" data-lang="es">ES</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-grid">
+    <div class="hero-text">
+      <p class="eyebrow">// <span data-en="Systems Engineering Student" data-es="Estudiante de Ingeniería de Sistemas">Systems Engineering Student</span></p>
+      <h1>
+        <span data-en="Building software," data-es="Construyendo software,">Building software,</span><br>
+        <span data-en="one line at a time." data-es="una línea a la vez.">one line at a time.</span>
+      </h1>
+      <p class="lede" data-en="I'm Jose Pinedo, a Systems Engineering student turning curiosity into code — currently looking for my first opportunity as a Junior Developer." data-es="Soy Jose Pinedo, estudiante de Ingeniería de Sistemas convirtiendo la curiosidad en código — buscando mi primera oportunidad como Desarrollador Junior.">I'm Jose Pinedo, a Systems Engineering student turning curiosity into code — currently looking for my first opportunity as a Junior Developer.</p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-primary"><span data-en="View Projects" data-es="Ver Proyectos">View Projects</span></a>
+        <a id="cvBtn" class="btn btn-ghost" href="Jose_Pinedo_Resume_EN.pdf" download="Jose_Pinedo_Resume_EN.pdf" data-href-en="Jose_Pinedo_Resume_EN.pdf" data-href-es="Jose_Pinedo_Resume_ES.pdf" data-file-en="Jose_Pinedo_Resume_EN.pdf" data-file-es="Jose_Pinedo_Resume_ES.pdf">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+          <span data-en="Download CV" data-es="Descargar CV">Download CV</span>
+        </a>
+        <a href="#contact" class="btn btn-ghost"><span data-en="Let's talk" data-es="Hablemos">Let's talk</span></a>
+      </div>
+    </div>
+
+    <div class="code-window">
+      <div class="code-titlebar">
+        <span class="code-dot r"></span><span class="code-dot y"></span><span class="code-dot g"></span>
+        <span class="code-filename">profile.js</span>
+      </div>
+      <div class="code-body">
+        <div class="code-line" style="animation-delay:.05s"><span class="tok-kw">const</span> developer <span class="tok-punc">=</span> <span class="tok-punc">{</span></div>
+        <div class="code-line" style="animation-delay:.18s">&nbsp;&nbsp;<span class="tok-key">name:</span> <span class="tok-str">"Jose Pinedo"</span><span class="tok-punc">,</span></div>
+        <div class="code-line" style="animation-delay:.31s">&nbsp;&nbsp;<span class="tok-key">role:</span> <span class="tok-str">"<span data-en="Systems Eng. Student" data-es="Estudiante de Ing. de Sistemas">Systems Eng. Student</span>"</span><span class="tok-punc">,</span></div>
+        <div class="code-line" style="animation-delay:.44s">&nbsp;&nbsp;<span class="tok-key">location:</span> <span class="tok-str">"Montería, Colombia"</span><span class="tok-punc">,</span></div>
+        <div class="code-line" style="animation-delay:.57s">&nbsp;&nbsp;<span class="tok-key">status:</span> <span class="tok-str">"<span data-en="Open to opportunities" data-es="Disponible para oportunidades">Open to opportunities</span>"</span><span class="tok-punc">,</span></div>
+        <div class="code-line" style="animation-delay:.70s">&nbsp;&nbsp;<span class="tok-key">stack:</span> <span class="tok-punc">[</span><span class="tok-str">"HTML"</span><span class="tok-punc">,</span> <span class="tok-str">"CSS"</span><span class="tok-punc">,</span> <span class="tok-str">"JS"</span><span class="tok-punc">,</span> <span class="tok-str">"Python"</span><span class="tok-punc">,</span> <span class="tok-str">"SQL"</span><span class="tok-punc">,</span> <span class="tok-str">"Git"</span><span class="tok-punc">],</span></div>
+        <div class="code-line" style="animation-delay:.83s"><span class="tok-punc">};</span><span class="cursor-blink"></span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="section-inner">
+    <span class="eyebrow-section">01</span>
+    <h2 class="section-title" data-en="About" data-es="Sobre mí">About</h2>
+    <div class="about-card reveal">
+      <p data-en="I'm passionate about technology, web development, and building digital solutions that solve real problems. I learn fast, I'm not afraid to dive into the unknown, and I'm looking for a team where I can grow as a developer." data-es="Me apasiona la tecnología, el desarrollo web y la creación de soluciones digitales que resuelvan problemas reales. Aprendo rápido, no le tengo miedo a lo desconocido, y busco un equipo donde pueda crecer como desarrollador.">I'm passionate about technology, web development, and building digital solutions that solve real problems. I learn fast, I'm not afraid to dive into the unknown, and I'm looking for a team where I can grow as a developer.</p>
+      <div class="badges">
+        <span class="badge">🎓 <span data-en="Student" data-es="Estudiante">Student</span></span>
+        <span class="badge">⚡ <span data-en="Fast learner" data-es="Aprendizaje rápido">Fast learner</span></span>
+        <span class="badge">🌎 <span data-en="Remote-friendly" data-es="Disponible remoto">Remote-friendly</span></span>
+        <span class="badge">🚀 <span data-en="Open to Junior roles" data-es="Abierto a roles Junior">Open to Junior roles</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-inner">
+    <span class="eyebrow-section">02</span>
+    <h2 class="section-title" data-en="Projects" data-es="Proyectos">Projects</h2>
+    <p class="section-sub" data-en="A few things I've built — with much more on the way." data-es="Algunas cosas que he construido — con mucho más en camino.">A few things I've built — with much more on the way.</p>
+    <div class="projects-grid">
+      <div class="project-card reveal">
+        <span class="tag">Web</span>
+        <h3 data-en="Personal Portfolio" data-es="Portafolio Personal">Personal Portfolio</h3>
+        <p data-en="My first portfolio, designed and deployed with GitHub Pages — a living project I keep iterating on." data-es="Mi primer portafolio, diseñado y publicado con GitHub Pages — un proyecto vivo que sigo mejorando.">My first portfolio, designed and deployed with GitHub Pages — a living project I keep iterating on.</p>
+        <div class="tech-row">
+          <span class="tech-chip">HTML</span><span class="tech-chip">CSS</span><span class="tech-chip">JavaScript</span>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <span class="tag" data-en="Coming soon" data-es="Próximamente">Coming soon</span>
+        <h3 data-en="Next Build" data-es="Próximo Proyecto">Next Build</h3>
+        <p data-en="Where my next apps, websites, and systems will live as I keep growing as a developer." data-es="Aquí vivirán mis próximas apps, sitios y sistemas a medida que sigo creciendo como desarrollador.">Where my next apps, websites, and systems will live as I keep growing as a developer.</p>
+        <div class="tech-row">
+          <span class="tech-chip">TBD</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="section-inner">
+    <span class="eyebrow-section">03</span>
+    <h2 class="section-title" data-en="Skills" data-es="Habilidades">Skills</h2>
+    <p class="section-sub" data-en="Technologies I'm building with and learning right now." data-es="Tecnologías con las que construyo y que estoy aprendiendo ahora mismo.">Technologies I'm building with and learning right now.</p>
+    <div class="skills-groups reveal">
+      <div>
+        <span class="skill-group-label">Frontend</span>
+        <div class="chips">
+          <span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JavaScript</span>
+        </div>
+      </div>
+      <div>
+        <span class="skill-group-label" data-en="Backend & Data" data-es="Backend y Datos">Backend &amp; Data</span>
+        <div class="chips">
+          <span class="chip">Python</span><span class="chip">SQL</span>
+        </div>
+      </div>
+      <div>
+        <span class="skill-group-label" data-en="Tools" data-es="Herramientas">Tools</span>
+        <div class="chips">
+          <span class="chip">Git</span><span class="chip">GitHub</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-inner">
+    <span class="eyebrow-section">04</span>
+    <div class="contact-card reveal">
+      <div class="contact-glow"></div>
+      <h2 data-en="Let's build something together" data-es="Construyamos algo juntos">Let's build something together</h2>
+      <p class="section-sub" data-en="Open to internships, Junior roles, and freelance collaborations." data-es="Abierto a prácticas, roles Junior y colaboraciones freelance.">Open to internships, Junior roles, and freelance collaborations.</p>
+      <div class="contact-list">
+        <div class="contact-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+          <a href="mailto:josedehoyos2023@gmail.com">josedehoyos2023@gmail.com</a>
+        </div>
+        <div class="contact-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5a2 2 0 0 1 2-2h3l2 5-2 1a11 11 0 0 0 5 5l1-2 5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 5Z"/></svg>
+          <a href="https://wa.me/573192303071" target="_blank" rel="noopener">+57 319 230 3071</a>
+        </div>
+      </div>
+      <div class="contact-actions">
+        <a class="btn btn-primary" href="mailto:josedehoyos2023@gmail.com"><span data-en="Email me" data-es="Escríbeme">Email me</span></a>
+        <a class="btn btn-ghost" href="https://wa.me/573192303071" target="_blank" rel="noopener">WhatsApp</a>
+        <a class="btn btn-ghost" href="https://github.com/INGjosepinedo?tab=repositories" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/jos%C3%A9-de-hoyos-pinedo-1b0769418" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span data-en="© 2026 Jose Pinedo — Built with curiosity." data-es="© 2026 Jose Pinedo — Construido con curiosidad.">© 2026 Jose Pinedo — Built with curiosity.</span>
+</footer>
+
+<script>
+  // mobile nav
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', isOpen);
+  });
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // language switch
+  const langButtons = document.querySelectorAll('.lang-opt');
+  const cvBtn = document.getElementById('cvBtn');
+  const titles = {
+    en: 'Jose Pinedo | Software Developer Portfolio',
+    es: 'Jose Pinedo | Portafolio de Desarrollador'
+  };
+  function applyLang(lang){
+    document.documentElement.lang = lang;
+    document.title = titles[lang];
+    document.querySelectorAll('[data-en]').forEach(el => {
+      el.textContent = lang === 'en' ? el.dataset.en : el.dataset.es;
+    });
+    if (cvBtn) {
+      const file = lang === 'en' ? cvBtn.dataset.fileEn : cvBtn.dataset.fileEs;
+      cvBtn.setAttribute('href', file);
+      cvBtn.setAttribute('download', file);
+    }
+    langButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.lang === lang));
+  }
+  langButtons.forEach(btn => {
+    btn.addEventListener('click', () => applyLang(btn.dataset.lang));
+  });
+
+  // scroll reveal
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
+  }
+</script>
+
+</body>
+</html>
